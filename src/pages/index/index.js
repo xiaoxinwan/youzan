@@ -8,6 +8,8 @@ import url from 'js/api.js'
 import { InfiniteScroll } from 'mint-ui'
 Vue.use(InfiniteScroll);
 
+import Foot from 'components/Foot.vue'
+
 new Vue({
     el: '#app',
     data: {
@@ -43,5 +45,8 @@ new Vue({
                 this.pageNum++
             })
         }
+    },
+    components: {
+        Foot
     }
 })
