@@ -8,7 +8,6 @@ let host = 'http://rap2api.taobao.org/app/mock/117941/GET'
 
 for (let key in url) {
     if (url.hasOwnProperty(key)) {
-        console.log(key)
         url[key] = host + url[key]
     }
 }

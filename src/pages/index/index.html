@@ -67,7 +67,7 @@
                 </div>
                 <div class="hot-goods js-waterfull-wrap" data-src="">
                     <ul class="js-list js-lazy" data-src="" v-infinite-scroll="getLists" infinite-scroll-disabled="loading" infinite-scroll-distance="30">
-                        <li v-for="list in lists" :key="list.id">
+                        <li v-for="(list,index) in lists" :key="index">
                             <div class="goods-item">
                                 <a href="https://h5.youzan.com/v2/showcase/goods?alias=2fwig6rnqfq6m&amp;source=yzapp&amp;f_platform=yzapp">
                                     <div class="thumb img-box">
