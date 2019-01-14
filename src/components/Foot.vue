@@ -1,7 +1,7 @@
 <template>
   <div class="bottom-nav">
     <ul>
-      <li :class="{active: index===curIndex}" v-for="(list, index) in navConfig" @click="changeNav(list,index)">
+      <li :class="{active: index===curIndex}" v-for="(list, index) in navConfig" :key="list.index" @click="changeNav(list,index)">
         <a>
           <i :class="list.icon"></i>
           <div>{{list.name}}</div>
@@ -56,8 +56,9 @@ export default {
   width: 100%;
   height: 50px;
   bottom: 0;
+  z-index: 99999;
   background-color: #fff;
-  z-index: 9999;
+  
   -o-border-image: url(https://b.yzcdn.cn/v2/image/wap/border-line-2.png) 2
     stretch;
   border-image: url(https://b.yzcdn.cn/v2/image/wap/border-line-2.png) 2 stretch;
@@ -76,6 +77,7 @@ export default {
   position: relative;
   height: 100%;
   zoom: 1;
+  
 }
 
 .bottom-nav ul:after {

@@ -3,11 +3,12 @@ let url = {
     banner: '/index/banner',
     topList: '/category/topList',
     subList: '/category/subList',
-    rank: '/category/rank'
+    rank: '/category/rank',
+    searchList: '/search/list'
 }
 
 // 开发环境和真实环境的切换
-let host = 'http://rap2api.taobao.org/app/mock/117941/GET'
+let host = 'https://www.easy-mock.com/mock/5c3be71133a2af207aa9adec/youzan'
 
 for (let key in url) {
     if (url.hasOwnProperty(key)) {
