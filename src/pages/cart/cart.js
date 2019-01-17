@@ -3,10 +3,12 @@ import "./cart_trade.css";
 import "./cart.css";
 
 import Vue from "vue";
-import axios from "axios";
-import url from "js/api.js";
+import url from 'js/api.js'
 import mixin from "js/mixin.js";
 import qs from "qs";
+import Cart from "js/cartService.js";
+import fetch from 'js/fetch.js'
+
 
 let { id } = qs.parse(location.search.substr(1));
 new Vue({
@@ -95,7 +97,7 @@ new Vue({
   },
   methods: {
     getList() {
-      axios.post(url.cartlist).then(res => {
+      fetch(url.cartlist).then(res => {
         let lists = res.data.cartList;
         lists.forEach(shop => {
           shop.checked = true;
@@ -142,24 +144,30 @@ new Vue({
     },
     reduce(good) {
       if (good.number === 1) return;
-      axios
-        .post(url.reduceCart, {
-          id: good.id,
-          number: 1
-        })
-        .then(res => {
-          good.number--;
-        });
+      // axios
+      //   .post(url.reduceCart, {
+      //     id: good.id,
+      //     number: 1
+      //   })
+      //   .then(res => {
+      //     good.number--;
+      //   });
+      Cart.reduce(good.id).then(res=>{
+        good.number--
+      })
     },
     add(good) {
-      axios
-        .post(url.addCart, {
-          id: good.id,
-          number: 1
-        })
-        .then(res => {
-          good.number++;
-        });
+      // axios
+      //   .post(url.addCart, {
+      //     id: good.id,
+      //     number: 1
+      //   })
+      //   .then(res => {
+      //     good.number++;
+      //   });
+      Cart.add(good.id).then(res => {
+        good.number++;
+      });
     },
     remove(shop, shopIndex, good, goodIndex) {
       this.removePopup = true;
@@ -173,8 +181,7 @@ new Vue({
     removeConfirm() {
       if (this.removeMsg === "你确定要删除此商品吗？") {
         let { shop, shopIndex, good, goodIndex } = this.removeData;
-        axios
-          .post(url.removeCart, {
+        fetch(url.removeCart, {
             id: good.id
           })
           .then(res => {
@@ -185,30 +192,36 @@ new Vue({
               this.resetShop();
             }
           });
-      }else{
-        let ids = []
+      } else {
+        let ids = [];
         this.removeLists.forEach(good => {
-          ids.push(good.id)
-        })
-        axios.post(url.mremoveCart,{ids}).then(res=>{
-          let arr = []
+          ids.push(good.id);
+        });
+        // 分为两种状态，正常和编辑，removeLists就是编辑状态下选中的商品，
+        // 删除多个商品，先遍历选中的商品列表，将它们的id放到ids数组
+        // 发请求，根据ids的id，删除对应的商品，
+        // 遍历编辑状态下的商品列表，对比选中的商品，利用findIndex
+        fetch(url.mremoveCart, { ids }).then(res => {
+          let arr = [];
           this.editingShop.goodsList.forEach(good => {
-            let index = this.removeLists.findIndex(item =>{
-              return item.id == good.id
-            })
-            if(index === -1){
-              arr.push(good)
+            let index = this.removeLists.findIndex(item => {
+              return item.id == good.id;
+            });
+            if (index === -1) {
+              // 剩下的是不用删除的商品，
+              arr.push(good);
             }
-          })
-          if(arr.length){
-            this.editingShop.goodsList = arr
-          }else{
-            this.cartlists.splice(this.editingShopIndex, 1)
-            this.resetShop()
+          });
+          if (arr.length) {
+            // 数组长度不为空，将arr赋值给编辑状态下的shop的商品列表
+            this.editingShop.goodsList = arr;
+          } else {
+            // 数组长度为空，相当于那个店铺的商品都没了，从源数据中删除该商铺
+            this.cartlists.splice(this.editingShopIndex, 1);
+            this.resetShop();
           }
-          this.removePopup = false
-        })
-        
+          this.removePopup = false;
+        });
       }
     },
     cancel() {
