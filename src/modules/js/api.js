@@ -13,7 +13,12 @@ let url = {
     cartlist: '/cart/list',
     reduceCart: '/cart/reduce',
     removeCart: '/cart/remove',
-    mremoveCart: '/cart/mremove'
+    mremoveCart: '/cart/mremove',
+    addAddress: '/address/add',
+    removeAddress: '/address/remove',
+    addressList: '/address/list',
+    updateAddress: '/address/update',
+    setDefaultAddress: '/address/setDefault'
 }
 
 // 开发环境和真实环境的切换
