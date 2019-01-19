@@ -27,12 +27,15 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
-    <!-- <link rel="stylesheet" href="./css/common.css">
-  <link rel="stylesheet" href="./css/index.css"> -->
+    <style>
+      [v-cloak] {
+        display: none;
+      }
+    </style>
   </head>
 
   <body class=" " style="min-height: 860px;">
-    <div id="app">
+    <div id="app" v-cloak>
       <div class="container with-bottom-nav" style="min-height: 667px;">
         <div class="content">
           <!-- <div class="js-image-swiper
@@ -91,9 +94,7 @@
             >
               <li v-for="(list,index) in lists" :key="index">
                 <div class="goods-item">
-                  <a
-                    :href="'goods.html?id='+list.id"
-                  >
+                  <a :href="'goods.html?id='+list.id">
                     <div class="thumb img-box">
                       <img class="fadeIn" v-bind:src="list.img" />
                     </div>

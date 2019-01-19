@@ -23,10 +23,15 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
+    <style>
+      [v-cloak] {
+        display: none;
+      }
+    </style>
   </head>
 
   <body class=" " style="min-height: 667px;">
-    <div class="container with-top-search" style="min-height: 667px;">
+    <div class="container with-top-search" style="min-height: 667px;" v-cloak>
       <div class="custom-search js-search-bar">
         <form>
           <input
